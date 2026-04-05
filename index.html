@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudo Law</title>
+<meta name="description" content="Sudo Law">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0b0b0b;
+    --charcoal: #141414;
+    --ash: #242424;
+    --fog: #6b6b6b;
+    --bone: #c9c9c4;
+    --paper: #e8e6df;
+    --terminal: #4ade80;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--bone);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.65;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ========== HEADER ========== */
+  header {
+    padding: 3rem 2rem 0;
+  }
+
+  .header-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--paper);
+  }
+
+  .brand .accent {
+    color: var(--terminal);
+  }
+
+  .brand .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 0.95em;
+    background: var(--terminal);
+    vertical-align: text-bottom;
+    margin-left: 4px;
+    animation: blink 1.2s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  .header-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fog);
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    padding: 10rem 0 7rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    margin-bottom: 2.5rem;
+  }
+
+  .lede {
+    font-size: 1.25rem;
+    color: var(--bone);
+    max-width: 32rem;
+    line-height: 1.6;
+  }
+
+  /* ========== SECTIONS ========== */
+  section.block {
+    padding: 5rem 0;
+    border-top: 1px solid var(--ash);
+  }
+
+  .block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fog);
+    margin-bottom: 2.5rem;
+  }
+
+  .practice-list {
+    list-style: none;
+  }
+
+  .practice-list li {
+    font-size: 1.5rem;
+    color: var(--paper);
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--ash);
+    font-weight: 300;
+  }
+
+  .practice-list li:last-child {
+    border-bottom: none;
+  }
+
+  /* ========== CONTACT ========== */
+  .contact p {
+    font-size: 1.15rem;
+    color: var(--bone);
+    max-width: 34rem;
+    margin-bottom: 2rem;
+  }
+
+  .email-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--terminal);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .email-link:hover {
+    border-bottom-color: var(--terminal);
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 4rem 0 3rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--ash);
+  }
+
+  .footer-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fog);
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 640px) {
+    body {
+      font-size: 17px;
+    }
+
+    header {
+      padding: 2rem 1.5rem 0;
+    }
+
+    .wrap, .footer-inner {
+      padding: 0 1.5rem;
+    }
+
+    .hero {
+      padding: 6rem 0 4rem;
+    }
+
+    section.block {
+      padding: 3.5rem 0;
+    }
+
+    .header-meta {
+      display: none;
+    }
+
+    .practice-list li {
+      font-size: 1.25rem;
+    }
+
+    .email-link {
+      font-size: 0.95rem;
+      word-break: break-all;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand"><span class="accent">$</span> sudo law<span class="cursor"></span></div>
+    <div class="header-meta">Attorneys &amp; Counselors</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <h1>Sudo Law</h1>
+    <p class="lede">
+      A law firm advising companies, investors, and founders on the transactions and decisions that shape what they build.
+    </p>
+  </section>
+
+  <section class="block">
+    <div class="block-label">Practice</div>
+    <ul class="practice-list">
+      <li>Corporate &amp; Transactional</li>
+      <li>Private Capital</li>
+      <li>Technology &amp; Emerging Industries</li>
+    </ul>
+  </section>
+
+  <section class="block contact">
+    <div class="block-label">Contact</div>
+    <p>
+      For new matters and general inquiries, please write to us.
+    </p>
+    <a id="contact-email" class="email-link" href="#">&nbsp;</a>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    &copy; Sudo Law
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var user = 'info';
+    var domain = ['sudolaw', 'com'].join('.');
+    var addr = user + String.fromCharCode(64) + domain;
+    var el = document.getElementById('contact-email');
+    if (el) {
+      el.textContent = addr;
+      el.setAttribute('href', 'mailto:' + addr);
+    }
+  })();
+</script>
+
+</body>
+</html>
