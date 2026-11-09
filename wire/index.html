@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wire — Sudo Law</title>
+<meta name="description" content="The Wire: a rolling feed of cyber news from Sudo Law — vulnerabilities, breaches, new tech, developments, and regulator and agency alerts, updated three times a day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0b0b0b;
+    --charcoal: #141414;
+    --ash: #242424;
+    --fog: #6b6b6b;
+    --bone: #c9c9c4;
+    --paper: #e8e6df;
+    --terminal: #4ade80;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--black);
+    color: var(--bone);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.7;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+  header { padding: 3rem 2rem 0; }
+  .header-inner {
+    max-width: 780px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem; font-weight: 400;
+    letter-spacing: 0.05em; color: var(--paper);
+    text-decoration: none;
+  }
+  .brand .accent { color: var(--terminal); }
+  .brand .cursor {
+    display: inline-block; width: 7px; height: 0.95em;
+    background: var(--terminal); vertical-align: text-bottom;
+    margin-left: 4px; animation: blink 1.2s steps(1) infinite;
+  }
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  .hero { padding: 6rem 0 4rem; }
+  h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1; letter-spacing: -0.02em;
+    color: var(--paper); margin-bottom: 2.5rem;
+  }
+  .lede { font-size: 1.45rem; color: var(--bone); max-width: 34rem; line-height: 1.6; }
+  .hero-links {
+    margin-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-links a {
+    color: var(--terminal); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: border-color 0.3s ease;
+  }
+  .hero-links a:hover { border-bottom-color: var(--terminal); }
+  section.block { padding: 3.5rem 0; border-top: 1px solid var(--ash); }
+  .wire-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fog);
+    margin-bottom: 1.5rem;
+  }
+  .wire-list { list-style: none; }
+  .wire-item {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--ash);
+  }
+  .wire-item:last-child { border-bottom: none; }
+  .wire-meta {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--terminal);
+    margin-bottom: 0.3rem;
+  }
+  .wire-item a {
+    font-size: 1.3rem; font-weight: 400; line-height: 1.45;
+    color: var(--paper); text-decoration: none;
+  }
+  .wire-item a:hover { color: var(--terminal); }
+  .wire-source {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fog);
+    margin-top: 0.3rem;
+  }
+  .updated {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--fog);
+    margin-bottom: 2.5rem;
+  }
+  footer { padding: 4rem 0 3rem; margin-top: 4rem; border-top: 1px solid var(--ash); }
+  .footer-inner {
+    max-width: 780px; margin: 0 auto; padding: 0 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fog);
+  }
+  .footer-inner a { color: var(--fog); text-decoration: none; }
+  .footer-inner a:hover { color: var(--terminal); }
+  @media (max-width: 640px) {
+    body { font-size: 19px; }
+    header { padding: 2rem 1.5rem 0; }
+    .wrap, .footer-inner { padding: 0 1.5rem; }
+    .hero { padding: 4rem 0 3rem; }
+    .wire-item a { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="accent">$</span> sudo law<span class="cursor"></span></a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <h1>The Wire</h1>
+    <p class="lede">
+      A rolling feed of cyber news — vulnerabilities, breaches, new tech,
+      developments, and regulator alerts — updated three times a day.
+    </p>
+    <p class="hero-links"><a href="/briefing/">The daily briefing &rarr;</a></p>
+  </section>
+
+  <!-- WIRE_FEED_START -->
+  <section class="block">
+    <p class="updated">Last updated &mdash; Monday, November 9, 2026, 3:05 PM CT</p>
+    <h2 class="wire-date">Monday, November 9, 2026</h2>
+    <ul class="wire-list">
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; BREACH</span>
+        <a href="https://vanderbilthustler.com/2026/11/09/breaking-vanderbilt-wi-fi-networks-reportedly-hacked-vuit-yet-to-confirm/">Vanderbilt University hit by cybersecurity attack — community told to shut down university-issued devices</a>
+        <span class="wire-source">Vanderbilt Hustler</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; DEVELOPMENT</span>
+        <a href="https://research.checkpoint.com/2026/9th-november-threat-intelligence-report/">Nov. 9 threat report: Queens Public Library ransomware, Ukraine's Air Alert app compromised, cPGuard supply-chain attack</a>
+        <span class="wire-source">Check Point Research</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; DEVELOPMENT</span>
+        <a href="https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html">Weekly recap: SSHole exploited, APT root RCE, robot takeovers, 15,000 hacked sites</a>
+        <span class="wire-source">The Hacker News</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; NEW TECH</span>
+        <a href="https://cybersecuritytracker.ai/">Agentic AI attacks are now operational — an AI framework hunts exposed secrets in code repos and pivots into cloud environments in minutes</a>
+        <span class="wire-source">Cybersecurity Tracker</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; VULNERABILITY</span>
+        <a href="https://www.helpnetsecurity.com/2026/11/06/openssh-sshole-cve-2026-123158-exploitation/">OpenSSH &lsquo;sshole&rsquo; flaw exploited within nine hours of disclosure — patch, and restart sshd</a>
+        <span class="wire-source">Help Net Security</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; VULNERABILITY</span>
+        <a href="https://hatamoto.dev/wordpress/wordpress-7-1-4-upgrade-rce-cisa-kev">WordPress core flaw under active exploit — Wordfence blocked 13,000 attacks in a single day</a>
+        <span class="wire-source">Hatamoto</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; REGULATOR</span>
+        <a href="https://www.cryptika.com/cisa-warns-two-critical-9-0-flaws-in-powersystem-center-allow-unauthorized-access-and-sql-injection/">CISA advisory: two critical 9.0 flaws in PowerSYSTEM Center could hand over admin access</a>
+        <span class="wire-source">Cryptika</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; BREACH</span>
+        <a href="https://www.neowin.net/news/japanese-retailer-iris-ohyama-warns-of-data-breach-affecting-77-million-users/">Iris Ohyama breach may have exposed personal data of up to 7.7 million customers</a>
+        <span class="wire-source">Neowin</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; BREACH</span>
+        <a href="https://thehackernews.com/2026/11/chainalysis-breach-exposes-all-users.html">Chainalysis breach exposed credentials and live tokens for all users</a>
+        <span class="wire-source">The Hacker News</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; BREACH</span>
+        <a href="https://www.bleepingcomputer.com/news/security/digicert-data-breach-exposes-customer-information-identity-documents/">DigiCert breach exposed customer information and identity documents</a>
+        <span class="wire-source">BleepingComputer</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; BREACH</span>
+        <a href="https://newsbytes.ph/2026/11/09/bir-probes-alleged-data-breach-involving-over-10-million-taxpayer-records/">Philippines tax agency probes alleged 10-million-record breach; the Philippine SEC confirms a separate platform breach</a>
+        <span class="wire-source">NewsBytes</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; REGULATOR</span>
+        <a href="https://pandromeda.com/security/cve-2024-27834-cisa-flags-old-apple-webkit-flaw-as-exploited">CISA adds an old Apple WebKit flaw to its exploited-vulnerabilities list</a>
+        <span class="wire-source">Pandromeda</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; LAW &amp; POLICY</span>
+        <a href="https://www.defenseone.com/policy/2026/11/industry-groups-cyber-sharing-law/416993/">U.S. cyber threat-sharing law faces a December 11 deadline</a>
+        <span class="wire-source">Defense One</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">3:05 PM &middot; LAW &amp; POLICY</span>
+        <a href="https://www.tuv-nord.com/uk/en/uk-cyber-security-and-resilience-bill/">UK Cyber Security and Resilience Bill heads back to the Commons</a>
+        <span class="wire-source">TÜV Nord</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2 class="wire-date">Sunday, November 8, 2026</h2>
+    <ul class="wire-list">
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; DEVELOPMENT</span>
+        <a href="https://secureresearch.com/briefings/2026-11-04.html">Attackers are hitting supermarket refrigeration controls across Europe — physical operations, not just data</a>
+        <span class="wire-source">SecureResearch</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; DEVELOPMENT</span>
+        <a href="https://www.blackarrowcyber.com/blog/threat-briefing-06-november-2026">Phishing is getting more targeted, and more AI-assisted</a>
+        <span class="wire-source">BlackArrow Cyber</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; VULNERABILITY</span>
+        <a href="https://ifynx.com/blog/sonicwall-vulnerability-cve-2026-19868-sslvpn-saml-mfa-bypass-patch-gulf-egypt/">SonicWall SSLVPN flaw bypasses MFA — CISA's federal deadline is November 20</a>
+        <span class="wire-source">Ifynx</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; BREACH</span>
+        <a href="https://checkthe99.com/news/california-student-testing-data-breach-what-valley-families-should-do.html">ETS breach exposed California student records, including disability status</a>
+        <span class="wire-source">CheckThe99</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; BREACH</span>
+        <a href="https://travelhost.com/airlines/massive-data-breach-hits-six-major-asian-airlines-amadeus-singapore">One vendor, six Asian airlines: the Amadeus breach</a>
+        <span class="wire-source">TravelHost</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; LAW &amp; POLICY</span>
+        <a href="https://www.paubox.com/blog/senate-bill-would-require-minimum-cyber-standards-for-healthcare">Senate passes the Health Care Cybersecurity and Resiliency Act (S. 3315)</a>
+        <span class="wire-source">Paubox</span>
+      </li>
+      <li class="wire-item">
+        <span class="wire-meta">SUNDAY &middot; REGULATOR</span>
+        <a href="https://www.roicompliance.com/safeguards-rule">FTC Safeguards Rule reminder: a vendor's breach can become your problem</a>
+        <span class="wire-source">ROI Compliance</span>
+      </li>
+    </ul>
+  </section>
+  <!-- WIRE_FEED_END -->
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    &copy; Sudo Law &middot; <a href="/briefing/">The Briefing</a>
+  </div>
+</footer>
+
+</body>
+</html>
