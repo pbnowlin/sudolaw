@@ -44,7 +44,7 @@
 
   /* ========== HEADER ========== */
   header {
-    padding: 3rem 2rem 0;
+    padding: 1.5rem 2rem 0;
   }
 
   .header-inner {
@@ -92,7 +92,7 @@
 
   /* ========== HERO ========== */
   .hero {
-    padding: 10rem 0 7rem;
+    padding: 2rem 0 1rem;
   }
 
   h1 {
@@ -102,7 +102,7 @@
     line-height: 1;
     letter-spacing: -0.02em;
     color: var(--paper);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .lede {
@@ -114,7 +114,7 @@
 
   /* ========== SECTIONS ========== */
   section.block {
-    padding: 5rem 0;
+    padding: 1.25rem 0;
     border-top: 1px solid var(--ash);
   }
 
@@ -124,7 +124,7 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--fog);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .practice-list {
@@ -167,8 +167,8 @@
 
   /* ========== FOOTER ========== */
   footer {
-    padding: 4rem 0 3rem;
-    margin-top: 4rem;
+    padding: 2rem 0 2rem;
+    margin-top: 2rem;
     border-top: 1px solid var(--ash);
   }
 
@@ -190,7 +190,7 @@
     }
 
     header {
-      padding: 2rem 1.5rem 0;
+      padding: 1.25rem 1.5rem 0;
     }
 
     .wrap, .footer-inner {
@@ -198,11 +198,11 @@
     }
 
     .hero {
-      padding: 6rem 0 4rem;
+      padding: 1.5rem 0 0.75rem;
     }
 
     section.block {
-      padding: 3.5rem 0;
+      padding: 1.25rem 0;
     }
 
     .header-meta {
@@ -218,6 +218,8 @@
       word-break: break-all;
     }
   }
+  .footer-inner a { color: var(--terminal); text-decoration: none; }
+  .footer-inner a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -254,21 +256,12 @@
     <a id="contact-email" class="email-link" href="#">&nbsp;</a>
   </section>
 
-  <section class="block briefing">
-    <div class="block-label">Cyber Briefing</div>
-    <p>
-      A daily update on cybersecurity — emerging threats, major breaches,
-      new laws, and regulator action — updated each morning.
-    </p>
-    <a class="email-link" href="/briefing/">Click to read more. &rarr;</a><br>
-    <a class="email-link" href="/wire/">The Wire — rolling cyber news &rarr;</a>
-  </section>
 
 </div>
 
 <footer>
   <div class="footer-inner">
-    &copy; Sudo Law
+    &copy; Sudo Law &middot; <a href="/briefing/">Briefing</a> | <a href="/wire/">Wire</a>
   </div>
 </footer>
 
