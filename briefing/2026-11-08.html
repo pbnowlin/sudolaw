@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="alternate" type="application/rss+xml" title="Sudo Law — The Briefing" href="/briefing/feed.xml">
 <style>
   :root {
     --black: #0b0b0b;
@@ -114,6 +115,17 @@
     text-transform: uppercase; color: var(--fog);
     margin-bottom: 0.35rem;
   }
+  .subscribe {
+    margin-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  .subscribe a {
+    color: var(--terminal); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: border-color 0.3s ease;
+  }
+  .subscribe a:hover { border-bottom-color: var(--terminal); }
   footer { padding: 4rem 0 3rem; margin-top: 4rem; border-top: 1px solid var(--ash); }
   .footer-inner {
     max-width: 780px; margin: 0 auto; padding: 0 2rem;
@@ -339,7 +351,7 @@
 
 <footer>
   <div class="footer-inner">
-    &copy; Sudo Law &middot; <a class="text-link" href="/">Home</a> &middot; <a class="text-link" href="/briefing/">Briefing</a>
+    &copy; Sudo Law &middot; <a class="text-link" href="/">Home</a> &middot; <a class="text-link" href="/briefing/">Briefing</a> &middot; <a class="text-link" href="/briefing/feed.xml">RSS</a>
   </div>
 </footer>
 
