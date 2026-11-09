@@ -29,9 +29,9 @@
     background: var(--black);
     color: var(--bone);
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 19px;
-    line-height: 1.65;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.7;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
@@ -57,7 +57,7 @@
 
   .brand {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 400;
     letter-spacing: 0.05em;
     color: var(--paper);
@@ -106,7 +106,7 @@
   }
 
   .lede {
-    font-size: 1.25rem;
+    font-size: 1.45rem;
     color: var(--bone);
     max-width: 32rem;
     line-height: 1.6;
@@ -120,7 +120,7 @@
 
   .block-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--fog);
@@ -132,7 +132,7 @@
   }
 
   .practice-list li {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: var(--paper);
     padding: 1.25rem 0;
     border-bottom: 1px solid var(--ash);
@@ -144,8 +144,8 @@
   }
 
   /* ========== CONTACT ========== */
-  .contact p {
-    font-size: 1.15rem;
+  .contact p, .briefing p {
+    font-size: 1.3rem;
     color: var(--bone);
     max-width: 34rem;
     margin-bottom: 2rem;
@@ -153,7 +153,7 @@
 
   .email-link {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--terminal);
     text-decoration: none;
     letter-spacing: 0.02em;
@@ -177,7 +177,7 @@
     margin: 0 auto;
     padding: 0 2rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--fog);
@@ -186,7 +186,7 @@
   /* ========== RESPONSIVE ========== */
   @media (max-width: 640px) {
     body {
-      font-size: 17px;
+      font-size: 19px;
     }
 
     header {
@@ -210,11 +210,11 @@
     }
 
     .practice-list li {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
     }
 
     .email-link {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       word-break: break-all;
     }
   }
@@ -225,7 +225,6 @@
 <header>
   <div class="header-inner">
     <div class="brand"><span class="accent">$</span> sudo law<span class="cursor"></span></div>
-    <div class="header-meta">Attorneys &amp; Counselors</div>
   </div>
 </header>
 
@@ -253,6 +252,15 @@
       For new matters and general inquiries, please write to us.
     </p>
     <a id="contact-email" class="email-link" href="#">&nbsp;</a>
+  </section>
+
+  <section class="block briefing">
+    <div class="block-label">The Briefing</div>
+    <p>
+      A daily briefing on cybersecurity — emerging threats, major breaches,
+      new laws, and regulator action — updated each morning.
+    </p>
+    <a class="email-link" href="/briefing/">Read the briefing &rarr;</a>
   </section>
 
 </div>
