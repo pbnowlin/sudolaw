@@ -109,6 +109,47 @@
   }
   .footer-inner a { color: var(--fog); text-decoration: none; }
   .footer-inner a:hover { color: var(--terminal); }
+  .privacy-link {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    color: var(--fog);
+  }
+  .privacy-link:hover, .privacy-link:focus-visible { color: var(--terminal); text-decoration: underline; }
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 50;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop[hidden] { display: none; }
+  .modal {
+    position: relative;
+    background: var(--charcoal);
+    border: 1px solid var(--ash);
+    max-width: 760px; width: 100%;
+    max-height: 86vh; overflow-y: auto;
+    padding: 1.75rem 2rem 2rem;
+    font-size: 1.05rem; line-height: 1.65;
+  }
+  .modal h2 {
+    font-weight: 500; font-size: 1.6rem; color: var(--paper);
+    margin-bottom: 0.25rem; padding-right: 2.5rem;
+  }
+  .modal h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--terminal); font-weight: 400;
+    margin: 1.4rem 0 0.4rem;
+  }
+  .modal p { margin-bottom: 0.6rem; }
+  .modal .modal-updated { color: var(--fog); font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .modal a { color: var(--terminal); }
+  .modal-close {
+    position: absolute; top: 0.6rem; right: 0.9rem;
+    background: none; border: 0; cursor: pointer;
+    color: var(--fog); font-size: 1.7rem; line-height: 1; padding: 0.25rem;
+  }
+  .modal-close:hover, .modal-close:focus-visible { color: var(--terminal); }
   @media (max-width: 640px) {
     body { font-size: 19px; }
     header { padding: 1.25rem 1.5rem 0; }
@@ -355,9 +396,61 @@
 
 <footer>
   <div class="footer-inner">
-    &copy; Sudo Law
+    &copy; Sudo Law &middot; <button type="button" class="privacy-link" id="privacyOpen" aria-haspopup="dialog">Privacy Notice</button>
   </div>
 </footer>
+
+<div class="modal-backdrop" id="privacyModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+    <button type="button" class="modal-close" id="privacyClose" aria-label="Close privacy notice">&times;</button>
+    <h2 id="privacyTitle">Privacy Notice</h2>
+    <p class="modal-updated">Last updated &mdash; November 10, 2026</p>
+
+    <p>Sudo Law operates sudolaw.com as a static, informational website. This notice explains what information the site does &mdash; and does not &mdash; collect when you visit.</p>
+
+    <h3>Information we do not collect</h3>
+    <p>This site does not collect, request, or store personal information. It has no user accounts, contact forms, comment sections, newsletter sign-ups, or payment features, and it does not run analytics, advertising, or tracking tools. We do not set cookies or use similar tracking technologies, and we do not sell or share personal information &mdash; because we do not receive any through this site.</p>
+
+    <h3>Technical information handled by our host</h3>
+    <p>The site is hosted on GitHub Pages. As with most web hosting, the hosting infrastructure may automatically process basic technical data &mdash; such as IP addresses, browser type, and request timestamps &mdash; in server logs needed to deliver the site and keep it secure. That processing is governed by the host&rsquo;s own privacy practices. Sudo Law does not use server logs to identify or track individual visitors.</p>
+
+    <h3>Links to other websites</h3>
+    <p>The news feed on this site links to articles published by third parties. When you follow one of those links, you leave sudolaw.com, and the destination site&rsquo;s own privacy practices apply. We are not responsible for the content or privacy practices of third-party websites.</p>
+
+    <h3>Email you send us</h3>
+    <p>If you email us, we will receive your email address and whatever you include in your message, and we will use it only to respond to you. Please do not send confidential, privileged, or sensitive information by email unless an attorney-client relationship has been formally established &mdash; contacting us does not by itself create one.</p>
+
+    <h3>Changes to this notice</h3>
+    <p>If this notice changes, the revised version will be posted in this window with an updated date.</p>
+
+    <h3>Questions</h3>
+    <p>Questions about this notice should be directed to <a href="mailto:privacy@sudolaw.com">privacy@sudolaw.com</a>.</p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var modal = document.getElementById('privacyModal');
+    var openBtn = document.getElementById('privacyOpen');
+    var closeBtn = document.getElementById('privacyClose');
+    function openModal() {
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      openBtn.focus();
+    }
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  })();
+</script>
 
 </body>
 </html>
