@@ -151,37 +151,58 @@
   }
   .modal-close:hover, .modal-close:focus-visible { color: var(--terminal); }
 
-  /* Category filter */
+  /* Category filter — single button, pop-out menu */
   .feed-filter {
-    position: sticky; top: 0; z-index: 20;
-    background: var(--black);
+    position: relative;
     padding: 1.1rem 0 0.9rem;
     border-bottom: 1px solid var(--ash);
   }
-  .filter-label {
-    display: block;
+  .filter-toggle {
+    display: inline-flex; align-items: center; gap: 0.55rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--terminal); margin-bottom: 0.6rem;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--paper); background: var(--charcoal);
+    border: 1px solid var(--ash);
+    padding: 0.55rem 0.9rem; cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
   }
-  .filter-options { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-  .filter-btn {
+  .filter-toggle .accent { color: var(--terminal); }
+  .filter-toggle .filter-current { color: var(--terminal); }
+  .filter-toggle .filter-caret {
+    color: var(--fog); font-size: 0.75rem; line-height: 1;
+    transition: transform 0.2s ease;
+  }
+  .filter-toggle[aria-expanded="true"] .filter-caret { transform: rotate(180deg); }
+  .filter-toggle:hover { border-color: var(--terminal); }
+  .filter-toggle:focus-visible { outline: 2px solid var(--terminal); outline-offset: 2px; }
+  .filter-menu {
+    position: absolute; left: 0; top: calc(100% - 0.35rem); z-index: 30;
+    min-width: 270px; max-width: calc(100vw - 3rem);
+    background: var(--charcoal);
+    border: 1px solid var(--ash);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+    padding: 0.35rem;
+  }
+  .filter-menu[hidden] { display: none; }
+  .filter-option {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    width: 100%; text-align: left;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--bone); background: transparent;
-    border: 1px solid var(--ash); border-radius: 999px;
-    padding: 0.38rem 0.75rem; cursor: pointer;
-    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    border: 0; padding: 0.6rem 0.7rem; cursor: pointer;
   }
-  .filter-btn .count { color: var(--fog); margin-left: 0.35rem; }
-  .filter-btn:hover { color: var(--terminal); border-color: var(--terminal); }
-  .filter-btn:focus-visible { outline: 2px solid var(--terminal); outline-offset: 2px; }
-  .filter-btn.active {
-    background: var(--terminal); border-color: var(--terminal); color: var(--black);
+  .filter-option .filter-option-name::before {
+    content: ""; display: inline-block; width: 1em; margin-right: 0.15rem;
   }
-  .filter-btn.active .count { color: var(--black); opacity: 0.65; }
-  .filter-btn:disabled { opacity: 0.35; cursor: default; }
-  .filter-btn:disabled:hover { color: var(--bone); border-color: var(--ash); }
+  .filter-option.active { color: var(--terminal); }
+  .filter-option.active .filter-option-name::before { content: "\2713"; }
+  .filter-option .count { color: var(--fog); }
+  .filter-option.active .count { color: var(--terminal); opacity: 0.75; }
+  .filter-option:hover, .filter-option:focus-visible { background: #1e1e1e; color: var(--terminal); }
+  .filter-option:focus-visible { outline: 2px solid var(--terminal); outline-offset: -2px; }
+  .filter-option:disabled { opacity: 0.35; cursor: default; }
+  .filter-option:disabled:hover { background: transparent; color: var(--bone); }
   .filter-status {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
@@ -197,7 +218,8 @@
     .wrap, .footer-inner { padding: 0 1.5rem; }
     .hero { padding: 1.5rem 0 0.75rem; }
     .wire-item a { font-size: 1.15rem; }
-    .filter-btn { font-size: 0.75rem; padding: 0.32rem 0.6rem; }
+    .filter-toggle { font-size: 0.8rem; padding: 0.5rem 0.8rem; }
+    .filter-menu { min-width: min(270px, calc(100vw - 3rem)); }
   }
 </style>
 </head>
@@ -214,15 +236,15 @@
 
   <!-- FEED_FILTER_START -->
   <nav class="feed-filter" aria-label="Filter news by category">
-    <span class="filter-label">$ filter by category</span>
-    <div class="filter-options" role="group" aria-label="Categories">
-      <button type="button" class="filter-btn" data-filter="all">All<span class="count" data-count="all"></span></button>
-      <button type="button" class="filter-btn" data-filter="vulnerability">Vulnerability<span class="count" data-count="vulnerability"></span></button>
-      <button type="button" class="filter-btn" data-filter="breach">Breach<span class="count" data-count="breach"></span></button>
-      <button type="button" class="filter-btn" data-filter="new-tech">New Tech<span class="count" data-count="new-tech"></span></button>
-      <button type="button" class="filter-btn" data-filter="development">Development<span class="count" data-count="development"></span></button>
-      <button type="button" class="filter-btn" data-filter="regulator">Regulator<span class="count" data-count="regulator"></span></button>
-      <button type="button" class="filter-btn" data-filter="law-policy">Law &amp; Policy<span class="count" data-count="law-policy"></span></button>
+    <button type="button" class="filter-toggle" id="filterToggle" aria-haspopup="true" aria-expanded="false" aria-controls="filterMenu"><span><span class="accent">$</span> filter</span><span class="filter-current" id="filterCurrent">All</span><span class="filter-caret" aria-hidden="true">&#9662;</span></button>
+    <div class="filter-menu" id="filterMenu" role="menu" aria-label="Categories" hidden>
+      <button type="button" class="filter-option" data-filter="all" role="menuitemradio" aria-checked="true"><span class="filter-option-name">All</span><span class="count" data-count="all"></span></button>
+      <button type="button" class="filter-option" data-filter="vulnerability" role="menuitemradio" aria-checked="false"><span class="filter-option-name">Vulnerability</span><span class="count" data-count="vulnerability"></span></button>
+      <button type="button" class="filter-option" data-filter="breach" role="menuitemradio" aria-checked="false"><span class="filter-option-name">Breach</span><span class="count" data-count="breach"></span></button>
+      <button type="button" class="filter-option" data-filter="new-tech" role="menuitemradio" aria-checked="false"><span class="filter-option-name">New Tech</span><span class="count" data-count="new-tech"></span></button>
+      <button type="button" class="filter-option" data-filter="development" role="menuitemradio" aria-checked="false"><span class="filter-option-name">Development</span><span class="count" data-count="development"></span></button>
+      <button type="button" class="filter-option" data-filter="regulator" role="menuitemradio" aria-checked="false"><span class="filter-option-name">Regulator</span><span class="count" data-count="regulator"></span></button>
+      <button type="button" class="filter-option" data-filter="law-policy" role="menuitemradio" aria-checked="false"><span class="filter-option-name">Law &amp; Policy</span><span class="count" data-count="law-policy"></span></button>
     </div>
     <p class="filter-status" id="filterStatus" aria-live="polite"></p>
     <p class="filter-empty" id="filterEmpty" hidden>No items in this category yet.</p>
@@ -685,11 +707,14 @@
 
 <script>
   (function () {
-    var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+    var toggle = document.getElementById('filterToggle');
+    var menu = document.getElementById('filterMenu');
+    var current = document.getElementById('filterCurrent');
+    var options = Array.prototype.slice.call(document.querySelectorAll('.filter-option'));
     var items = Array.prototype.slice.call(document.querySelectorAll('.wire-item'));
     var status = document.getElementById('filterStatus');
     var empty = document.getElementById('filterEmpty');
-    if (!buttons.length || !items.length) return;
+    if (!toggle || !menu || !options.length || !items.length) return;
 
     function slugify(text) {
       return text.toLowerCase().replace(/&/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -703,19 +728,33 @@
       counts[slug] = (counts[slug] || 0) + 1;
     });
 
-    buttons.forEach(function (btn) {
+    var labels = { all: 'All' };
+    var statusLabels = { all: 'all categories' };
+    options.forEach(function (btn) {
       var key = btn.getAttribute('data-filter');
       var n = counts[key] || 0;
       var countEl = btn.querySelector('[data-count]');
       if (countEl) countEl.textContent = n;
       if (key !== 'all' && n === 0) btn.disabled = true;
+      var nameEl = btn.querySelector('.filter-option-name');
+      var name = nameEl ? nameEl.textContent.trim() : key;
+      labels[key] = name;
+      if (key !== 'all') statusLabels[key] = name.toLowerCase();
     });
 
-    var labels = { all: 'all categories' };
-    buttons.forEach(function (btn) {
-      var key = btn.getAttribute('data-filter');
-      if (key !== 'all') labels[key] = btn.textContent.replace(/[0-9]+\s*$/, '').trim().toLowerCase();
-    });
+    function setMenu(open) {
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        var active = menu.querySelector('.filter-option.active') || menu.querySelector('.filter-option:not(:disabled)');
+        if (active) active.focus();
+      }
+    }
+    function closeMenu(returnFocus) {
+      if (menu.hidden) return;
+      setMenu(false);
+      if (returnFocus) toggle.focus();
+    }
 
     function applyFilter(key, updateHash) {
       var shown = 0;
@@ -724,13 +763,15 @@
         item.hidden = !match;
         if (match) shown++;
       });
-      buttons.forEach(function (btn) {
+      options.forEach(function (btn) {
         var isActive = btn.getAttribute('data-filter') === key;
         btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
       });
+      current.textContent = labels[key] || key;
+      toggle.setAttribute('aria-label', 'Filter by category, currently ' + (labels[key] || key));
       empty.hidden = shown !== 0;
-      status.textContent = 'Showing ' + shown + ' of ' + items.length + ' \u2014 ' + (labels[key] || key);
+      status.textContent = 'Showing ' + shown + ' of ' + items.length + ' \u2014 ' + (statusLabels[key] || key);
       if (updateHash && window.history && history.replaceState) {
         history.replaceState(null, '', key === 'all'
           ? window.location.pathname + window.location.search
@@ -738,8 +779,27 @@
       }
     }
 
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () { applyFilter(btn.getAttribute('data-filter'), true); });
+    toggle.addEventListener('click', function () { setMenu(menu.hidden); });
+    options.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyFilter(btn.getAttribute('data-filter'), true);
+        closeMenu(true);
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.hidden && !menu.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) closeMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) closeMenu(true);
+    });
+    menu.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      var enabled = options.filter(function (b) { return !b.disabled; });
+      var idx = enabled.indexOf(document.activeElement);
+      if (idx === -1) return;
+      e.preventDefault();
+      var next = e.key === 'ArrowDown' ? enabled[(idx + 1) % enabled.length] : enabled[(idx - 1 + enabled.length) % enabled.length];
+      if (next) next.focus();
     });
 
     var initial = 'all';
