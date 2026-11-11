@@ -7,13 +7,13 @@
 <meta name="description" content="Sudo Law — a rolling feed of cyber news: vulnerabilities, breaches, new tech, developments, and regulator and agency alerts, updated throughout the day.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #0b0b0b;
     --charcoal: #141414;
     --ash: #242424;
-    --fog: #6b6b6b;
+    --fog: #8a8a8a;
     --bone: #c9c9c4;
     --paper: #e8e6df;
     --terminal: #4ade80;
@@ -48,26 +48,9 @@
     margin-left: 4px; animation: blink 1.2s steps(1) infinite;
   }
   @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-  .hero { padding: 2rem 0 1rem; }
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    line-height: 1; letter-spacing: -0.02em;
-    color: var(--paper); margin-bottom: 0;
+  @media (prefers-reduced-motion: reduce) {
+    .brand .cursor { animation: none; }
   }
-  .lede { font-size: 1.45rem; color: var(--bone); max-width: 34rem; line-height: 1.6; }
-  .hero-links {
-    margin-top: 2rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
-  }
-  .hero-links a {
-    color: var(--terminal); text-decoration: none;
-    border-bottom: 1px solid transparent; transition: border-color 0.3s ease;
-  }
-  .hero-links a:hover { border-bottom-color: var(--terminal); }
   section.block { padding: 1.25rem 0; border-top: 1px solid var(--ash); }
   .wire-list { list-style: none; }
   .wire-item {
@@ -216,7 +199,6 @@
     body { font-size: 19px; }
     header { padding: 1.25rem 1.5rem 0; }
     .wrap, .footer-inner { padding: 0 1.5rem; }
-    .hero { padding: 1.5rem 0 0.75rem; }
     .wire-item a { font-size: 1.15rem; }
     .filter-toggle { font-size: 0.8rem; padding: 0.5rem 0.8rem; }
     .filter-menu { min-width: min(270px, calc(100vw - 3rem)); }
@@ -231,7 +213,7 @@
   </div>
 </header>
 
-<div class="wrap">
+<main class="wrap">
 
 
   <!-- FEED_FILTER_START -->
@@ -497,7 +479,7 @@
       </li>
       <li class="wire-item">
         <span class="wire-meta">DEVELOPMENT</span>
-        <a href="http://thehackernews.com/2026/11/france-blames-iran-for-sabotage-attack.html">France blames Iran for sabotage attack on refrigeration controllers at about 700 retail sites</a>
+        <a href="https://thehackernews.com/2026/11/france-blames-iran-for-sabotage-attack.html">France blames Iran for sabotage attack on refrigeration controllers at about 700 retail sites</a>
         <span class="wire-source">The Hacker News</span>
       </li>
       <li class="wire-item">
@@ -644,7 +626,7 @@
   </section>
   <!-- WIRE_FEED_END -->
 
-</div>
+</main>
 
 <footer>
   <div class="footer-inner">
