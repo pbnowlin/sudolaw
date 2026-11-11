@@ -150,12 +150,54 @@
     color: var(--fog); font-size: 1.7rem; line-height: 1; padding: 0.25rem;
   }
   .modal-close:hover, .modal-close:focus-visible { color: var(--terminal); }
+
+  /* Category filter */
+  .feed-filter {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--black);
+    padding: 1.1rem 0 0.9rem;
+    border-bottom: 1px solid var(--ash);
+  }
+  .filter-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--terminal); margin-bottom: 0.6rem;
+  }
+  .filter-options { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .filter-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--bone); background: transparent;
+    border: 1px solid var(--ash); border-radius: 999px;
+    padding: 0.38rem 0.75rem; cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .filter-btn .count { color: var(--fog); margin-left: 0.35rem; }
+  .filter-btn:hover { color: var(--terminal); border-color: var(--terminal); }
+  .filter-btn:focus-visible { outline: 2px solid var(--terminal); outline-offset: 2px; }
+  .filter-btn.active {
+    background: var(--terminal); border-color: var(--terminal); color: var(--black);
+  }
+  .filter-btn.active .count { color: var(--black); opacity: 0.65; }
+  .filter-btn:disabled { opacity: 0.35; cursor: default; }
+  .filter-btn:disabled:hover { color: var(--bone); border-color: var(--ash); }
+  .filter-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fog); margin-top: 0.6rem; min-height: 1.2em;
+  }
+  .filter-empty {
+    padding: 1.25rem 0; color: var(--fog); font-size: 1.1rem;
+  }
+  .wire-item[hidden] { display: none; }
   @media (max-width: 640px) {
     body { font-size: 19px; }
     header { padding: 1.25rem 1.5rem 0; }
     .wrap, .footer-inner { padding: 0 1.5rem; }
     .hero { padding: 1.5rem 0 0.75rem; }
     .wire-item a { font-size: 1.15rem; }
+    .filter-btn { font-size: 0.75rem; padding: 0.32rem 0.6rem; }
   }
 </style>
 </head>
@@ -168,6 +210,24 @@
 </header>
 
 <div class="wrap">
+
+
+  <!-- FEED_FILTER_START -->
+  <nav class="feed-filter" aria-label="Filter news by category">
+    <span class="filter-label">$ filter by category</span>
+    <div class="filter-options" role="group" aria-label="Categories">
+      <button type="button" class="filter-btn" data-filter="all">All<span class="count" data-count="all"></span></button>
+      <button type="button" class="filter-btn" data-filter="vulnerability">Vulnerability<span class="count" data-count="vulnerability"></span></button>
+      <button type="button" class="filter-btn" data-filter="breach">Breach<span class="count" data-count="breach"></span></button>
+      <button type="button" class="filter-btn" data-filter="new-tech">New Tech<span class="count" data-count="new-tech"></span></button>
+      <button type="button" class="filter-btn" data-filter="development">Development<span class="count" data-count="development"></span></button>
+      <button type="button" class="filter-btn" data-filter="regulator">Regulator<span class="count" data-count="regulator"></span></button>
+      <button type="button" class="filter-btn" data-filter="law-policy">Law &amp; Policy<span class="count" data-count="law-policy"></span></button>
+    </div>
+    <p class="filter-status" id="filterStatus" aria-live="polite"></p>
+    <p class="filter-empty" id="filterEmpty" hidden>No items in this category yet.</p>
+  </nav>
+  <!-- FEED_FILTER_END -->
 
   <!-- WIRE_FEED_START -->
   <section class="block">
@@ -619,6 +679,73 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !modal.hidden) closeModal();
     });
+  })();
+</script>
+
+
+<script>
+  (function () {
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+    var items = Array.prototype.slice.call(document.querySelectorAll('.wire-item'));
+    var status = document.getElementById('filterStatus');
+    var empty = document.getElementById('filterEmpty');
+    if (!buttons.length || !items.length) return;
+
+    function slugify(text) {
+      return text.toLowerCase().replace(/&/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    var counts = { all: items.length };
+    items.forEach(function (item) {
+      var meta = item.querySelector('.wire-meta');
+      var slug = meta ? slugify(meta.textContent.trim()) : '';
+      item.setAttribute('data-category', slug);
+      counts[slug] = (counts[slug] || 0) + 1;
+    });
+
+    buttons.forEach(function (btn) {
+      var key = btn.getAttribute('data-filter');
+      var n = counts[key] || 0;
+      var countEl = btn.querySelector('[data-count]');
+      if (countEl) countEl.textContent = n;
+      if (key !== 'all' && n === 0) btn.disabled = true;
+    });
+
+    var labels = { all: 'all categories' };
+    buttons.forEach(function (btn) {
+      var key = btn.getAttribute('data-filter');
+      if (key !== 'all') labels[key] = btn.textContent.replace(/[0-9]+\s*$/, '').trim().toLowerCase();
+    });
+
+    function applyFilter(key, updateHash) {
+      var shown = 0;
+      items.forEach(function (item) {
+        var match = key === 'all' || item.getAttribute('data-category') === key;
+        item.hidden = !match;
+        if (match) shown++;
+      });
+      buttons.forEach(function (btn) {
+        var isActive = btn.getAttribute('data-filter') === key;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      empty.hidden = shown !== 0;
+      status.textContent = 'Showing ' + shown + ' of ' + items.length + ' \u2014 ' + (labels[key] || key);
+      if (updateHash && window.history && history.replaceState) {
+        history.replaceState(null, '', key === 'all'
+          ? window.location.pathname + window.location.search
+          : '#filter=' + key);
+      }
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () { applyFilter(btn.getAttribute('data-filter'), true); });
+    });
+
+    var initial = 'all';
+    var m = window.location.hash.match(/filter=([a-z0-9-]+)/);
+    if (m && counts.hasOwnProperty(m[1])) initial = m[1];
+    applyFilter(initial, false);
   })();
 </script>
 
